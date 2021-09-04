@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
         fontSize: 25,
         textAlign: 'center'
     }
-})
+});
 
 
 export default Header;

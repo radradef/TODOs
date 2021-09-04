@@ -4,7 +4,7 @@
 
  import 'react-native';
  import React from 'react';
- import Header from '../components/Header';
+ import Header from '../scr/components/Header';
  import { expect } from '@jest/globals';
  import renderer from 'react-test-renderer';
  
