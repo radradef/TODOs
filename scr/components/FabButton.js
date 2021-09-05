@@ -6,7 +6,7 @@ const FabButton = ({ onPress }) => {
     return (
         <TouchableOpacity onPress={onPress} testID="fabButton">
             <View style={styles.fabButtonView}>
-                <Icon name="plus" size={50} color="darkslateblue" />
+                <Icon name="plus" size={50} color="black" />
             </View>
         </TouchableOpacity>
     );
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
         width: 60,
         height: 60,
         borderRadius: 60 / 2,
-        backgroundColor: 'lightblue'
+        backgroundColor: 'white'
     },
 });
 
