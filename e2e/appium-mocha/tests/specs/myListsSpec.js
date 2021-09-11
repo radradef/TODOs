@@ -1,4 +1,5 @@
 import assert from 'assert';
+import BaseScreen from '../screenObjects/BaseScreen';
 import CreateNewListScreen from '../screenObjects/CreateNewListScreen';
 import MyListsScreen from '../screenObjects/MyListsScreen';
 
@@ -26,10 +27,11 @@ describe('My Lists screen', () => {
 
     it('should be able to open lists', async () => {
         await MyListsScreen.click(MyListsScreen.getElementWithText(SHOPPING));
-
-        assert.equal(await CreateNewListScreen.isElementDisplayed(CreateNewListScreen.backBtn), true,
+        let ListScreen = new BaseScreen();
+        
+        assert.equal(await ListScreen.isElementDisplayed(ListScreen.backBtn), true,
             'The back button is NOT displayed.');
-        assert.equal(await CreateNewListScreen.isElementWithTextDisplayed(SHOPPING), true,
+        assert.equal(await ListScreen.isElementWithTextDisplayed(SHOPPING), true,
             SHOPPING + ' List screen is NOT displayed.');
     });
 

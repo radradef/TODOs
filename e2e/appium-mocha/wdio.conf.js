@@ -12,17 +12,18 @@ exports.config = {
         platformName: 'Android',
         maxInstances: 1,
         'appium:deviceName': 'Emulator',
-        'appium:platformVersion': '11',
+        'appium:platformVersion': '10',
         'appium:automationName': 'UiAutomator2',
-        'appium:app': join(process.cwd(), './app/app-release.apk'),
+        'appium:app': '../../android/app/build/outputs/apk/release/app-release.apk',
         'appium:appWaitActivity': 'com.todos.MainActivity',
         'appium:noReset': true,
         'appium:autoLaunch': false,
         'appium:newCommandTimeout': 240,
+        'appium:isHeadless': true,
     }],
     logLevel: 'info',
     bail: 0,
-    waitforTimeout: 10000,
+    waitforTimeout: 20000,
     connectionRetryTimeout: 120000,
     connectionRetryCount: 3,
     framework: 'mocha',
@@ -33,11 +34,11 @@ exports.config = {
         require: ['@babel/register']
     },
 
-    beforeTest: function() {
-        driver.launchApp();
+    beforeTest: async function() {
+        await driver.launchApp();
     },
 
-    afterTest: function() {
-        driver.closeApp();
+    afterTest: async function() {
+        await driver.closeApp();
     },
 }

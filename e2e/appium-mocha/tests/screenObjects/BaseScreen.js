@@ -1,24 +1,20 @@
 export default class BaseScreen {
 
-    WAIT = 1500;
-
     get backBtn() { return $('~Navigate up'); }
 
     async click(element) {
-        await element.waitForDisplayed({
-            timeout: this.WAIT,
-        });
+        await element.waitForDisplayed();
         await element.click();
     }
 
     async fillWithData(element, data) {
-        await element.waitForDisplayed({
-            timeout: this.WAIT,
-        });
+        await element.waitForDisplayed();
         await element.setValue(data);
     }
 
     async readFrom(element) {
+        await element.waitForDisplayed();
+        
         return await element.getText();
     }
 
@@ -28,13 +24,12 @@ export default class BaseScreen {
 
     async isElementDisplayed(element) {
         try {
-            await element.waitForDisplayed({
-                timeout: this.WAIT,
-            });
-            return true;
+            await element.waitForDisplayed();
         } catch (error) {
             return false;
         }
+
+        return true;
     }
 
     async isElementWithTextDisplayed(text) {
