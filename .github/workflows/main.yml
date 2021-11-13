@@ -1,4 +1,4 @@
-name: Unit Tests
+name: CI
 on:
   push:
     branches: [ main, dev ]
@@ -7,11 +7,61 @@ on:
   workflow_dispatch:
 
 jobs:
-  jest:
-    runs-on: ubuntu-latest
+  CI:
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        api-level: [29]
+
     steps:
-      - uses: actions/checkout@v2
-      - name: Run Tests
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: Unit tests
         run: |
           npm install
           npm run test
+
+      - name: Build apk
+        run: |
+          npm run bundle-release
+          cd android && chmod +x gradlew
+          ./gradlew assembleRelease
+
+      - name: Gradle cache
+        uses: actions/cache@v2
+        with:
+         path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+         key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}-${{ hashFiles('**/buildSrc/**/*.kt') }}
+
+      - name: AVD cache
+        uses: actions/cache@v2
+        id: avd-cache
+        with:
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          key: avd-${{ matrix.api-level }}
+
+      - name: Create AVD and generate snapshot for caching
+        if: steps.avd-cache.outputs.cache-hit != 'true'
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ matrix.api-level }}
+          force-avd-creation: false
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: false
+          script: echo "Generated AVD snapshot for caching."
+
+      - name: E2E automation tests
+        uses: reactivecircus/android-emulator-runner@v2 
+        with:
+          api-level: ${{ matrix.api-level }}
+          force-avd-creation: false
+          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          emulator-build: 7425822
+          disable-animations: true
+          script: | 
+            cd ./e2e/appium-mocha && npx wdio run ./wdio.conf.js
