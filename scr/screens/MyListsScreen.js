@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import { View, StyleSheet, FlatList } from 'react-native';
 import FabButton from '../components/FabButton';
 import { SCREENS } from '../config/screens';
 import ListItem from '../items/ListItem';
-
 
 const DEFAULT_LISTS = [
     {
@@ -16,16 +15,22 @@ const DEFAULT_LISTS = [
     }
 ];
 
-const MyListsScreen = ({ navigation }) => {
+const MyListsScreen = ({ navigation, route }) => {
 
     const [lists, setLists] = useState(DEFAULT_LISTS);
+    useLayoutEffect(() => {
+        if (route.params) {
+            let newLists = lists.concat({ id: route.params.id, name: route.params.name });
+            setLists(newLists);
+        }
+    }, [route]);
 
     const renderItem = ({ item }) => (
         <ListItem name={item.name} onPress={() => handleOnListPress(item)} />
     );
 
     const handleOnListPress = (item) => {
-            navigation.navigate(SCREENS.TODOS, item);
+        navigation.navigate(SCREENS.TODOS, item);
     }
 
     const cerateNewList = () => {
