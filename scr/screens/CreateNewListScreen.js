@@ -4,6 +4,7 @@ import { SCREENS } from '../config/screens';
 import uuid from 'react-native-uuid';
 
 const CreateNewListScreen = ({ navigation }) => {
+
     const [listName, setListName] = useState(null);
 
     useLayoutEffect(() => {
@@ -22,7 +23,6 @@ const CreateNewListScreen = ({ navigation }) => {
         } else {
             navigation.navigate(SCREENS.MY_LISTS);
         }
-
     }
 
     return (

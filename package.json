@@ -11,6 +11,7 @@
     "bundle-release": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/build/intermediates/res/merged/release/"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.15.11",
     "@react-navigation/native": "^6.0.2",
     "@react-navigation/native-stack": "^6.1.0",
     "@wdio/cli": "^7.12.2",
@@ -43,6 +44,7 @@
     "testEnvironment": "jsdom",
     "moduleNameMapper": {
       ".+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$": "babel-jest"
-    }
+    },
+    "setupFiles": ["./jestSetup.js"]
   }
 }
