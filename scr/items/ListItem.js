@@ -1,42 +1,53 @@
 import React from 'react';
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, StyleSheet, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/dist/AntDesign';
+import { Swipeable } from 'react-native-gesture-handler';
 
 const ListItem = ({ listItem, onListPress, onDeletePress }) => {
 
-    return (
-        <View style={styles.container}>
-            <TouchableOpacity style={styles.listView}
-                activeOpacity={0.7}
-                onPress={onListPress}>
-                <Text>{listItem.name}</Text>
-            </TouchableOpacity>
+    const RightActions = () => {
+
+        return (
             <TouchableOpacity style={styles.deleteBtn}
                 onPress={onDeletePress}>
                 <Icon name="delete" size={25} color="black" />
             </TouchableOpacity>
+        );
+    }
+
+    return (
+        <View>
+            <Swipeable
+                rightThreshold={70}
+                overshootRight={false}
+                renderRightActions={RightActions}>
+                <TouchableOpacity style={styles.listView}
+                    activeOpacity={0.7}
+                    onPress={onListPress}>
+                    <Text style={styles.listViewText}>{listItem.name}</Text>
+                </TouchableOpacity>
+            </Swipeable>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flexDirection: 'row',
-        marginTop: 5,
-    },
     listView: {
-        flex: 6,
-        paddingLeft: 12,
         backgroundColor: 'white',
-        height: 40,
+        height: 60,
         justifyContent: 'center',
     },
+    listViewText: {
+        padding: 12,
+        fontWeight: "600",
+        fontSize: 15,
+    },
     deleteBtn: {
-        flex: 1,
         backgroundColor: 'red',
         alignItems: 'center',
         justifyContent: 'center',
-    }
+        width: 70,
+    },
 });
 
 export default ListItem;

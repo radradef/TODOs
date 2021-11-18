@@ -4,9 +4,10 @@ import FabButton from '../components/FabButton';
 import { SCREENS } from '../config/screens';
 import ListItem from '../items/ListItem';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Separator } from '../items/Separator';
 
 const MyListsScreen = ({ navigation, route }) => {
-
+    
     const DEFAULT_LISTS = [
         {
             id: 1,
@@ -83,6 +84,7 @@ const MyListsScreen = ({ navigation, route }) => {
                     data={lists}
                     renderItem={renderItem}
                     keyExtractor={item => item.id}
+                    ItemSeparatorComponent = {() => <Separator />}
                 />
             </View>
 
@@ -97,15 +99,15 @@ const MyListsScreen = ({ navigation, route }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#DFE1E0'
+        backgroundColor: '#DFE1E0',
     },
     todoView: {
-        flex: 4
+        flex: 4,
     },
     bottomView: {
         flex: 1,
         alignItems: 'flex-end',
-        paddingRight: 35
+        paddingRight: 35,
     }
 });
 

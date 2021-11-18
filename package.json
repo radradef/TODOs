@@ -17,6 +17,7 @@
     "@wdio/cli": "^7.12.2",
     "react": "17.0.2",
     "react-native": "0.65.1",
+    "react-native-gesture-handler": "^1.10.3",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "^3.6.0",
     "react-native-uuid": "^2.0.1",
@@ -45,6 +46,8 @@
     "moduleNameMapper": {
       ".+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$": "babel-jest"
     },
-    "setupFiles": ["./jestSetup.js"]
+    "setupFiles": [
+      "./jestSetup.js"
+    ]
   }
 }
